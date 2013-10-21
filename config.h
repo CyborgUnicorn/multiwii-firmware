@@ -26,7 +26,7 @@
   /**************************    The type of multicopter    ****************************/
     //#define GIMBAL
     //#define BI
-    //#define TRI
+    #define TRI
     //#define QUADP
     //#define QUADX
     //#define Y4
@@ -49,17 +49,18 @@
        This is the minimum value that allow motors to run at a idle speed  */
     //#define MINTHROTTLE 1300 // for Turnigy Plush ESCs 10A
     //#define MINTHROTTLE 1120 // for Super Simple ESCs 10A
-    //#define MINTHROTTLE 1064 // special ESC (simonk)
+    //#define MINTHROTTLE 1100 // special ESC (simonk)
     #define MINTHROTTLE 1150
 
   /****************************    Motor maxthrottle    *******************************/
     /* this is the maximum value for the ESCs at full power, this value can be increased up to 2000 */
       #define MAXTHROTTLE 1850
+      //#define MAXTHROTTLE 1900
 
   /****************************    Mincommand          *******************************/
     /* this is the value for the ESCs when they are not armed
        in some cases, this value must be lowered down to 900 for some specific ESCs, otherwise they failed to initiate */
-      #define MINCOMMAND  1000
+      #define MINCOMMAND  900
 
   /**********************************    I2C speed   ************************************/
     #define I2C_SPEED 100000L     //100kHz normal mode, this value must be used for a genuine WMP
@@ -86,7 +87,7 @@
       //#define FREEIMUv035_BMP // FreeIMU v0.3.5_BMP
       //#define FREEIMUv04      // FreeIMU v0.4 with MPU6050, HMC5883L, MS561101BA                  <- confirmed by Alex
       //#define FREEIMUv043     // same as FREEIMUv04 with final MPU6050 (with the right ACC scale)
-      //#define NANOWII         // the smallest multiwii FC based on MPU6050 + pro micro based proc <- confirmed by Alex
+      #define NANOWII         // the smallest multiwii FC based on MPU6050 + pro micro based proc <- confirmed by Alex
       //#define PIPO            // 9DOF board from erazz
       //#define QUADRINO        // full FC board 9DOF+baro board from witespy  with BMP085 baro     <- confirmed by Alex
       //#define QUADRINO_ZOOM   // full FC board 9DOF+baro board from witespy  second edition
@@ -317,7 +318,7 @@
       //#define SBUS
 
     /******************* RC signal from the serial port via Multiwii Serial Protocol *********/
-      //#define RCSERIAL
+      #define RCSERIAL
 
 
 
@@ -871,7 +872,7 @@
        Read How To at http://code.google.com/p/multiwii/wiki/ESCsCalibration */
     #define ESC_CALIB_LOW  MINCOMMAND
     #define ESC_CALIB_HIGH 2000
-    //#define ESC_CALIB_CANNOT_FLY  // uncomment to activate
+//    #define ESC_CALIB_CANNOT_FLY  // uncomment to activate
 
   /****           internal frequencies                             ****/
     /* frequenies for rare cyclic actions in the main loop, depend on cycle time
