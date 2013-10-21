@@ -51,6 +51,10 @@ static uint8_t inBuf[INBUF_SIZE];
 #define MSP_RESET_CONF           208   //in message          no param
 #define MSP_WP_SET               209   //in message          sets a given WP (WP#,lat, lon, alt, flags)
 
+// Custom for HK Aerial
+#define MSP_ARM                  10    //in message          no param
+#define MSP_DISARM               11    //in message          no param
+
 #define MSP_EEPROM_WRITE         250   //in message          no param
 
 #define MSP_DEBUG                254   //out message         debug1,debug2,debug3,debug4
@@ -365,6 +369,17 @@ void evaluateCommand() {
        serialize16(debug[i]); // 4 variables are here for general monitoring purpose
      }
      break;
+
+  case MSP_ARM:
+    setArmedFlag(1);
+    headSerialReply(0);
+    break;
+
+  case MSP_DISARM:
+    setArmedFlag(0);
+    headSerialReply(0);
+    break;
+
    default:  // we do not know how to handle the (valid) message, indicate error MSP $M!
      headSerialError(0);
      break;

@@ -752,6 +752,8 @@ void loop () {
         rcDelayCommand = 0;
       }
     }
+    //TIHI
+    //f.ARMED = 1; This is not set from the serial port
     #if defined(LED_FLASHER)
       led_flasher_autoselect_sequence();
     #endif
@@ -1010,4 +1012,10 @@ void loop () {
   mixTable();
   writeServos();
   writeMotors();
+}
+
+void setArmedFlag(uint8_t armed) {
+  f.ARMED = armed;
+  if ( armed == 1 ) beep_code('S','S','S','S');  
+  else beep_code('L','L','L','L');  
 }
