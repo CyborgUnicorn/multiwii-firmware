@@ -148,9 +148,9 @@ void serialCom() {
       checksum ^= c;
       inBuf[offset++] = c;
     } else if (c_state == HEADER_CMD && offset >= dataSize) {
-      //if (checksum == c) {  // compare calculated and transferred checksum
+      if (checksum == c) {  // compare calculated and transferred checksum
         evaluateCommand();  // we got a valid packet, evaluate it
-      //}
+      }
       c_state = IDLE;
     }
   }
