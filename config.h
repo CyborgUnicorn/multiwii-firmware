@@ -44,6 +44,8 @@
     //#define HELI_120_CCPM
     //#define HELI_90_DEG
 
+    #define HUNTER_KILLER
+
   /****************************    Motor minthrottle    *******************************/
     /* Set the minimum throttle command sent to the ESC (Electronic Speed Controller)
        This is the minimum value that allow motors to run at a idle speed  */
@@ -794,7 +796,7 @@
     //#define MOTOR_STOP
 
     /* some radios have not a neutral point centered on 1500. can be changed here */
-    #define MIDRC 1500
+      #define MIDRC 1500
 
   /***********************         Servo Refreshrates            ***********************/
     /* Default 50Hz Servo refresh rate*/

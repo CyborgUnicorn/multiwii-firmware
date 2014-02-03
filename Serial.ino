@@ -54,6 +54,7 @@ static uint8_t inBuf[INBUF_SIZE];
 // Custom for HK Aerial
 #define MSP_ARM                  10    //in message          no param
 #define MSP_DISARM               11    //in message          no param
+#define MSP_ATOMIC_SERVO         12    //in message          no param
 
 #define MSP_EEPROM_WRITE         250   //in message          no param
 
@@ -159,9 +160,18 @@ void serialCom() {
 void evaluateCommand() {
   switch(cmdMSP) {
    case MSP_SET_RAW_RC:
-     for(uint8_t i=0;i<8;i++) {
-       rcData[i] = read16();
-     }
+     #if defined(HUNTER_KILLER)
+       for(uint8_t i=0;i<8;i++) {
+        rcData[i] = read16();
+       }
+       for(uint8_t i=0;i<8;i++) {
+        hk_servo[i] = rcData[i];
+       }
+     #else
+       for(uint8_t i=0;i<8;i++) {
+        rcData[i] = read16();
+       }
+     #endif
      headSerialReply(0);
      break;
 #if GPS
@@ -212,6 +222,9 @@ void evaluateCommand() {
      serialize8(MULTITYPE); // type of multicopter
      serialize8(MSP_VERSION);         // MultiWii Serial Protocol Version
      serialize32(0);        // "capability"
+     #if defined(BUZZER)
+       beep_code('L','L','L','L');  
+     #endif
      break;
    case MSP_STATUS:
      headSerialReply(10);
@@ -370,14 +383,25 @@ void evaluateCommand() {
      }
      break;
 
-  case MSP_ARM:
-    setArmedFlag(1);
-    headSerialReply(0);
+    case MSP_ARM:
+      setArmedFlag(1);
+      headSerialReply(0);
+      break;
+
+    case MSP_DISARM:
+      setArmedFlag(0);
+      headSerialReply(0);
     break;
 
-  case MSP_DISARM:
-    setArmedFlag(0);
-    headSerialReply(0);
+    case MSP_ATOMIC_SERVO:
+      headSerialReply(8);
+      for(uint8_t i=0;i<8;i++) {
+       #if defined(HUNTER_KILLER)
+        serialize8(hk_atomic_servo[i]);
+       #else
+        serialize8(0);
+       #endif;
+      }
     break;
 
    default:  // we do not know how to handle the (valid) message, indicate error MSP $M!

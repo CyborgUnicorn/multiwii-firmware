@@ -205,6 +205,10 @@ static int16_t motor[NUMBER_MOTOR];
 #if defined(SERVO)
   static int16_t servo[8] = {1500,1500,1500,1500,1500,1500,1500,1500};
 #endif
+#if defined(HUNTER_KILLER)
+  static int16_t hk_servo[8] = {1500,1500,1500,1500,1500,1500,1500,1500};
+  static int8_t hk_atomic_servo[8] = {125,125,125,125,125,125,125,125};
+#endif
 
 // ************************
 // EEPROM Layout definition
@@ -1016,6 +1020,14 @@ void loop () {
 
 void setArmedFlag(uint8_t armed) {
   f.ARMED = armed;
-  if ( armed == 1 ) beep_code('S','S','S','S');  
-  else beep_code('L','L','L','L');  
+  if ( armed == 1 ) {
+    #if defined(BUZZER)
+      beep_code('S','S','S','S');  
+    #endif
+  }
+  else {
+    #if defined(BUZZER)
+      beep_code('L','L','L','L');  
+    #endif
+  }
 }
