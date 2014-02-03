@@ -149,9 +149,9 @@ void serialCom() {
       checksum ^= c;
       inBuf[offset++] = c;
     } else if (c_state == HEADER_CMD && offset >= dataSize) {
-      if (checksum == c) {  // compare calculated and transferred checksum
+      //if (checksum == c) {  // compare calculated and transferred checksum
         evaluateCommand();  // we got a valid packet, evaluate it
-      }
+      //}
       c_state = IDLE;
     }
   }
@@ -395,6 +395,9 @@ void evaluateCommand() {
 
     case MSP_ATOMIC_SERVO:
       headSerialReply(8);
+      hk_atomic_servo[0] = PRI_SERVO_FROM;
+      hk_atomic_servo[7] = PRI_SERVO_TO;
+
       for(uint8_t i=0;i<8;i++) {
        #if defined(HUNTER_KILLER)
         serialize8(hk_atomic_servo[i]);

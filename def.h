@@ -1098,8 +1098,8 @@
   #define PRI_SERVO_TO     6
 #elif defined(TRI)
   #define NUMBER_MOTOR     3
-  #define PRI_SERVO_FROM   6 // use only servo 6
-  #define PRI_SERVO_TO     7
+  #define PRI_SERVO_FROM   5 // use only servo 6
+  #define PRI_SERVO_TO     6
 #elif defined(QUADP) || defined(QUADX) || defined(Y4)|| defined(VTAIL4)
   #define NUMBER_MOTOR     4
 #elif defined(Y6) || defined(HEX6) || defined(HEX6X)
