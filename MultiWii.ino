@@ -757,7 +757,7 @@ void loop () {
       }
     }
     //TIHI
-    //f.ARMED = 1; This is not set from the serial port
+    f.ARMED = 1;// This is not set from the serial port
     #if defined(LED_FLASHER)
       led_flasher_autoselect_sequence();
     #endif

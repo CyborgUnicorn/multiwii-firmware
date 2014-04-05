@@ -226,12 +226,15 @@
   #endif
   
   // Servos
+
   #define SERVO_1_PINMODE   DDRF |= (1<<7); // A0
   #define SERVO_1_PIN_HIGH  PORTF|= 1<<7;
   #define SERVO_1_PIN_LOW   PORTF &= ~(1<<7);
+
   #define SERVO_2_PINMODE   DDRF |= (1<<6); // A1
   #define SERVO_2_PIN_HIGH  PORTF |= 1<<6;
   #define SERVO_2_PIN_LOW   PORTF &= ~(1<<6);
+
   #define SERVO_3_PINMODE   DDRF |= (1<<5); // A2
   #define SERVO_3_PIN_HIGH  PORTF |= 1<<5;
   #define SERVO_3_PIN_LOW   PORTF &= ~(1<<5);
@@ -244,12 +247,27 @@
     #define SERVO_4_PIN_HIGH  PORTF |= 1<<4;
     #define SERVO_4_PIN_LOW   PORTF &= ~(1<<4);  
   #endif
+
+#ifdef HUNTER_KILLER
+  #define SERVO_5_PINMODE   DDRC |= (1<<7); // 13
+  #define SERVO_5_PIN_HIGH  PORTC |= 1<<7;
+  #define SERVO_5_PIN_LOW   PORTC &= ~(1<<7);
+#else
   #define SERVO_5_PINMODE   DDRC |= (1<<6); // 5
   #define SERVO_5_PIN_HIGH  PORTC|= 1<<6;
   #define SERVO_5_PIN_LOW   PORTC &= ~(1<<6);
+#endif
+
+#ifdef HUNTER_KILLER
+  #define SERVO_6_PINMODE   DDRB |= (1<<7); // A11
+  #define SERVO_6_PIN_HIGH  PORTB |= 1<<7;
+  #define SERVO_6_PIN_LOW   PORTB &= ~(1<<7);
+#else
   #define SERVO_6_PINMODE   DDRD |= (1<<7); // 6
   #define SERVO_6_PIN_HIGH  PORTD |= 1<<7;
   #define SERVO_6_PIN_LOW   PORTD &= ~(1<<7);
+#endif
+
   #define SERVO_7_PINMODE   DDRB |= (1<<6); // 10
   #define SERVO_7_PIN_HIGH  PORTB |= 1<<6;
   #define SERVO_7_PIN_LOW   PORTB &= ~(1<<6);
@@ -1098,8 +1116,14 @@
   #define PRI_SERVO_TO     6
 #elif defined(TRI)
   #define NUMBER_MOTOR     3
-  #define PRI_SERVO_FROM   5 // use only servo 6
-  #define PRI_SERVO_TO     6
+  #ifdef HUNTER_KILLER
+    #define PRI_SERVO_FROM   5 // use servo from 5 to 6
+    #define PRI_SERVO_TO     6
+  #else
+    #define PRI_SERVO_FROM   5 // use only servo 6
+    #define PRI_SERVO_TO     5
+  #endif
+
 #elif defined(QUADP) || defined(QUADX) || defined(Y4)|| defined(VTAIL4)
   #define NUMBER_MOTOR     4
 #elif defined(Y6) || defined(HEX6) || defined(HEX6X)
