@@ -808,10 +808,16 @@ void mixTable() {
     servo[5]  = constrain(1500 + (YAW_DIRECTION * axisPID[YAW]) - axisPID[PITCH], 1020, 2000); //RIGHT
   #endif
   #ifdef TRI
-    motor[0] = PIDMIX( 0,+4/3, 0); //REAR
-    motor[1] = PIDMIX(-1,-2/3, 0); //RIGHT
-    motor[2] = PIDMIX(+1,-2/3, 0); //LEFT
-    servo[5] = constrain(conf.tri_yaw_middle + YAW_DIRECTION * axisPID[YAW], TRI_YAW_CONSTRAINT_MIN, TRI_YAW_CONSTRAINT_MAX); //REAR
+    #ifdef HUNTER_KILLER
+      motor[0] = PIDMIX( 0,-4/3, 0); //FRONT
+      motor[1] = PIDMIX(-1,+2/3, 0); //RIGHT
+      motor[2] = PIDMIX(+1,+2/3, 0); //LEFT
+    #else
+      motor[0] = PIDMIX( 0,+4/3, 0); //REAR
+      motor[1] = PIDMIX(-1,-2/3, 0); //RIGHT
+      motor[2] = PIDMIX(+1,-2/3, 0); //LEFT
+      servo[5] = constrain(conf.tri_yaw_middle + YAW_DIRECTION * axisPID[YAW], TRI_YAW_CONSTRAINT_MIN, TRI_YAW_CONSTRAINT_MAX); //REAR
+    #endif
   #endif
   #ifdef QUADP
     motor[0] = PIDMIX( 0,+1,-1); //REAR
