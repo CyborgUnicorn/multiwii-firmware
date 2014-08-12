@@ -55,6 +55,7 @@ static uint8_t inBuf[INBUF_SIZE];
 #define MSP_ARM                  10    //in message          no param
 #define MSP_DISARM               11    //in message          no param
 #define MSP_ATOMIC_SERVO         12    //in message          no param
+#define MSP_SET_RAW_MOTOR        13    //in message          motor[NUMBER_MOTOR]  HK = (0:front,1:right,2:left)
 
 #define MSP_EEPROM_WRITE         250   //in message          no param
 
@@ -405,6 +406,16 @@ void evaluateCommand() {
         serialize8(0);
        #endif;
       }
+    break;
+
+    case MSP_SET_RAW_MOTOR:
+      #ifdef HK_FORCE_RAW_MOTOR_VALUES
+       for(uint8_t i=0;i<NUMBER_MOTOR;i++) {
+        motorRaw[i] = read16();
+       }
+      #endif
+      headSerialReply(0);
+     break;
     break;
 
    default:  // we do not know how to handle the (valid) message, indicate error MSP $M!

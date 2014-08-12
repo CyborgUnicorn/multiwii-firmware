@@ -132,10 +132,26 @@ void writeServos() {
   #endif
 }
 
+#ifdef HK_FORCE_RAW_MOTOR_VALUES
+void writeMotorRawValues() {
+#ifdef TRI
+    #ifdef HUNTER_KILLER
+      motor[0] = motorRaw[0]; //FRONT
+      motor[1] = motorRaw[1]; //RIGHT
+      motor[2] = motorRaw[2]; //LEFT
+    #endif
+#endif
+}
+#endif
+
 /**************************************************************************************/
 /************  Writes the Motors values to the PWM compare register  ******************/
 /**************************************************************************************/
 void writeMotors() { // [1000;2000] => [125;250]
+
+#ifdef HK_FORCE_RAW_MOTOR_VALUES
+  writeMotorRawValues();
+#endif
 
 /****************  Specific PWM Timers & Registers for the MEGA's   *******************/
   #if defined(MEGA)// [1000:2000] => [8000:16000] for timer 3 & 4 for mega

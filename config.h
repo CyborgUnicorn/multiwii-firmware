@@ -45,6 +45,7 @@
     //#define HELI_90_DEG
 
     #define HUNTER_KILLER
+    #define HK_FORCE_RAW_MOTOR_VALUES
 
   /****************************    Motor minthrottle    *******************************/
     /* Set the minimum throttle command sent to the ESC (Electronic Speed Controller)

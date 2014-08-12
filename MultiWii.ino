@@ -180,6 +180,8 @@ static uint16_t intPowerMeterSum, intPowerTrigger1;
 static int16_t failsafeEvents = 0;
 volatile int16_t failsafeCnt = 0;
 
+static int16_t motorRaw[NUMBER_MOTOR];          // interval [1000;2000]
+
 static int16_t rcData[8];          // interval [1000;2000]
 static int16_t rcCommand[4];       // interval [1000;2000] for THROTTLE and [-500;+500] for ROLL/PITCH/YAW 
 static int16_t lookupPitchRollRC[6];// lookup table for expo & RC rate PITCH+ROLL
@@ -577,6 +579,12 @@ void setup() {
     led_flasher_set_sequence(LED_FLASHER_SEQUENCE);
   #endif
   f.SMALL_ANGLES_25=1; // important for gyro only conf
+  
+#ifdef HK_FORCE_RAW_MOTOR_VALUES
+  // reset the values so we dont fuck up this part
+  for(uint8_t i=0; i<NUMBER_MOTOR; ++i)
+    motorRaw[i] = 0;
+#endif
 }
 
 // ******** Main Loop *********
