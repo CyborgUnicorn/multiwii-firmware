@@ -182,6 +182,7 @@ volatile int16_t failsafeCnt = 0;
 
 #ifdef HK_FORCE_RAW_MOTOR_VALUES
 static int16_t motorRaw[NUMBER_MOTOR];          // interval [1000;2000]
+static uint8_t useMotorRaw;
 #endif
 
 #ifdef HK_READ_CALCULATED_MOTOR_VALUES
@@ -590,6 +591,8 @@ void setup() {
   // reset the values so we dont fuck up this part
   for(uint8_t i=0; i<NUMBER_MOTOR; ++i)
     motorRaw[i] = 0;
+
+  useMotorRaw = 0;
 #endif
 
 #ifdef HK_READ_CALCULATED_MOTOR_VALUES

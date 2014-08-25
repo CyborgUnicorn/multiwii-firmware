@@ -45,7 +45,7 @@
     //#define HELI_90_DEG
 
     #define HUNTER_KILLER
-    //#define HK_FORCE_RAW_MOTOR_VALUES
+    #define HK_FORCE_RAW_MOTOR_VALUES
     #define HK_READ_CALCULATED_MOTOR_VALUES
 
   /****************************    Motor minthrottle    *******************************/

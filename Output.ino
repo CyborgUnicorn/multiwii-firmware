@@ -155,7 +155,8 @@ void writeMotors() { // [1000;2000] => [125;250]
 #endif
 
 #ifdef HK_FORCE_RAW_MOTOR_VALUES
-  writeMotorRawValues();
+  if ( useMotorRaw > 0 )
+    writeMotorRawValues();
 #endif
 
 /****************  Specific PWM Timers & Registers for the MEGA's   *******************/

@@ -52,11 +52,15 @@ static uint8_t inBuf[INBUF_SIZE];
 #define MSP_WP_SET               209   //in message          sets a given WP (WP#,lat, lon, alt, flags)
 
 // Custom for HK Aerial
-#define MSP_ARM                  10    //in message          no param
-#define MSP_DISARM               11    //in message          no param
-#define MSP_ATOMIC_SERVO         12    //in message          no param
-#define MSP_SET_RAW_MOTOR        13    //in message          motor[NUMBER_MOTOR]  HK = (0:front,1:right,2:left)
-#define MSP_GET_CALC_MOTOR       14    //in message          motor[NUMBER_MOTOR]  Get the actual motor value calculated by the MultiWii
+#define MSP_GET_CALC_MOTOR                10    //out message         motor[NUMBER_MOTOR]  Get the actual motor value calculated by the MultiWii
+#define MSP_GET_RAW_MOTOR_ENABLED         11    //out message         read if the set raw values setting is set 
+#define MSP_ATOMIC_SERVO                  12    //out message         no param
+
+#define MSP_ARM                           50    //in message          no param
+#define MSP_DISARM                        51    //in message          no param
+#define MSP_SET_RAW_MOTOR                 52    //in message          motor[NUMBER_MOTOR]  HK = (0:front,1:right,2:left)
+#define MSP_SET_RAW_MOTOR_ENABLED         53    //in message          enable and disable the raw motor value override 0:disable, anything else enable
+
 
 #define MSP_EEPROM_WRITE         250   //in message          no param
 
@@ -416,7 +420,6 @@ void evaluateCommand() {
        }
       #endif
       headSerialReply(0);
-     break;
     break;
 
     case MSP_GET_CALC_MOTOR:
@@ -427,6 +430,21 @@ void evaluateCommand() {
       }
     #endif
     break;
+
+    case MSP_GET_RAW_MOTOR_ENABLED:
+    #ifdef HK_FORCE_RAW_MOTOR_VALUES
+      headSerialReply(1);
+      serialize8(useMotorRaw);
+    #endif
+    break;
+
+    case MSP_SET_RAW_MOTOR_ENABLED:
+    #ifdef HK_FORCE_RAW_MOTOR_VALUES
+      useMotorRaw = read8();
+      headSerialReply(0);
+    #endif
+    break;
+
 
    default:  // we do not know how to handle the (valid) message, indicate error MSP $M!
      headSerialError(0);
