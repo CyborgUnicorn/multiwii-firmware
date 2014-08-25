@@ -180,7 +180,13 @@ static uint16_t intPowerMeterSum, intPowerTrigger1;
 static int16_t failsafeEvents = 0;
 volatile int16_t failsafeCnt = 0;
 
+#ifdef HK_FORCE_RAW_MOTOR_VALUES
 static int16_t motorRaw[NUMBER_MOTOR];          // interval [1000;2000]
+#endif
+
+#ifdef HK_READ_CALCULATED_MOTOR_VALUES
+static int16_t motorCalculated[NUMBER_MOTOR];   // the value calculated by the MultiWii befor epotentially being changed by us
+#endif
 
 static int16_t rcData[8];          // interval [1000;2000]
 static int16_t rcCommand[4];       // interval [1000;2000] for THROTTLE and [-500;+500] for ROLL/PITCH/YAW 
@@ -584,6 +590,12 @@ void setup() {
   // reset the values so we dont fuck up this part
   for(uint8_t i=0; i<NUMBER_MOTOR; ++i)
     motorRaw[i] = 0;
+#endif
+
+#ifdef HK_READ_CALCULATED_MOTOR_VALUES
+  // reset the values so we dont fuck up this part
+  for(uint8_t i=0; i<NUMBER_MOTOR; ++i)
+    motorCalculated[i] = 0;
 #endif
 }
 

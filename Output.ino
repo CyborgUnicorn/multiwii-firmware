@@ -149,6 +149,11 @@ void writeMotorRawValues() {
 /**************************************************************************************/
 void writeMotors() { // [1000;2000] => [125;250]
 
+#ifdef HK_READ_CALCULATED_MOTOR_VALUES
+  for(uint8_t i=0; i<NUMBER_MOTOR; ++i)
+    motorCalculated[i] = motor[i];
+#endif
+
 #ifdef HK_FORCE_RAW_MOTOR_VALUES
   writeMotorRawValues();
 #endif

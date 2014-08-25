@@ -45,7 +45,8 @@
     //#define HELI_90_DEG
 
     #define HUNTER_KILLER
-    #define HK_FORCE_RAW_MOTOR_VALUES
+    //#define HK_FORCE_RAW_MOTOR_VALUES
+    #define HK_READ_CALCULATED_MOTOR_VALUES
 
   /****************************    Motor minthrottle    *******************************/
     /* Set the minimum throttle command sent to the ESC (Electronic Speed Controller)
@@ -518,7 +519,7 @@
 
   /*************************    INFLIGHT ACC Calibration    *****************************/
     /* This will activate the ACC-Inflight calibration if unchecked */
-    //#define INFLIGHT_ACC_CALIBRATION
+    #define INFLIGHT_ACC_CALIBRATION
 
   /**************************    Disable WMP power pin     *******************************/
     /* disable use of the POWER PIN

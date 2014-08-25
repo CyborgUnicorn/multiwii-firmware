@@ -56,6 +56,7 @@ static uint8_t inBuf[INBUF_SIZE];
 #define MSP_DISARM               11    //in message          no param
 #define MSP_ATOMIC_SERVO         12    //in message          no param
 #define MSP_SET_RAW_MOTOR        13    //in message          motor[NUMBER_MOTOR]  HK = (0:front,1:right,2:left)
+#define MSP_GET_CALC_MOTOR       14    //in message          motor[NUMBER_MOTOR]  Get the actual motor value calculated by the MultiWii
 
 #define MSP_EEPROM_WRITE         250   //in message          no param
 
@@ -416,6 +417,15 @@ void evaluateCommand() {
       #endif
       headSerialReply(0);
      break;
+    break;
+
+    case MSP_GET_CALC_MOTOR:
+    #ifdef HK_READ_CALCULATED_MOTOR_VALUES
+      headSerialReply(16);
+      for(uint8_t i=0;i<8;i++) {
+        serialize16( (i < NUMBER_MOTOR) ? motorCalculated[i] : 0 );
+      }
+    #endif
     break;
 
    default:  // we do not know how to handle the (valid) message, indicate error MSP $M!
