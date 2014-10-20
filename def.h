@@ -1117,8 +1117,13 @@
 #elif defined(TRI)
   #define NUMBER_MOTOR     3
   #ifdef HUNTER_KILLER
-    #define PRI_SERVO_FROM   5 // use servo from 5 to 6
-    #define PRI_SERVO_TO     6
+    #ifdef HK_AUTO_SERVO
+      #define PRI_SERVO_FROM   5 // use only servo 6
+      #define PRI_SERVO_TO     6
+    #else
+      #define PRI_SERVO_FROM   5 // use servo from 5 to 6
+      #define PRI_SERVO_TO     6
+    #endif
   #else
     #define PRI_SERVO_FROM   5 // use only servo 6
     #define PRI_SERVO_TO     5

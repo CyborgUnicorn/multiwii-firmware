@@ -45,7 +45,8 @@
     //#define HELI_90_DEG
 
     #define HUNTER_KILLER
-    #define HK_FORCE_RAW_MOTOR_VALUES
+    #define HK_AUTO_SERVO
+    //#define HK_FORCE_RAW_MOTOR_VALUES
     #define HK_READ_CALCULATED_MOTOR_VALUES
 
   /****************************    Motor minthrottle    *******************************/
@@ -197,6 +198,7 @@
     /* The following lines apply only for a pitch/roll tilt stabilization system. Uncomment the first or second line to activate it */
     //#define SERVO_MIX_TILT
     //#define SERVO_TILT
+
     #define TILT_PITCH_MIN    1020    //servo travel min, don't set it below 1020
     #define TILT_PITCH_MAX    2000    //servo travel max, max value=2000
     #define TILT_PITCH_MIDDLE 1500    //servo neutral value
@@ -876,7 +878,7 @@
        Read How To at http://code.google.com/p/multiwii/wiki/ESCsCalibration */
     #define ESC_CALIB_LOW  MINCOMMAND
     #define ESC_CALIB_HIGH 2000
-//    #define ESC_CALIB_CANNOT_FLY  // uncomment to activate
+    //  #define ESC_CALIB_CANNOT_FLY  // uncomment to activate
 
   /****           internal frequencies                             ****/
     /* frequenies for rare cyclic actions in the main loop, depend on cycle time

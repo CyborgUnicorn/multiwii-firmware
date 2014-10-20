@@ -85,8 +85,12 @@ void writeServos() {
       for(uint8_t i = (PRI_SERVO_FROM-1); i < PRI_SERVO_TO; i++){
         #if defined(PROMINI) || (defined(PROMICRO) && defined(HWPWM6)) || (defined(MEGA) && defined(MEGA_HW_GIMBAL))
           #if defined(HUNTER_KILLER)
-            atomicServo[i] = (hk_servo[i]-1000)>>2;
-            hk_atomic_servo[i] = atomicServo[i];
+            #ifdef HK_AUTO_SERVO
+              atomicServo[i] = (servo[i]-1000)>>2;
+            #else
+              atomicServo[i] = (hk_servo[i]-1000)>>2;
+              hk_atomic_servo[i] = atomicServo[i];
+            #endif
           #else
             atomicServo[i] = (servo[i]-1000)>>2;
           #endif
@@ -148,7 +152,7 @@ void writeMotorRawValues() {
 /************  Writes the Motors values to the PWM compare register  ******************/
 /**************************************************************************************/
 void writeMotors() { // [1000;2000] => [125;250]
-
+  
 #ifdef HK_READ_CALCULATED_MOTOR_VALUES
   for(uint8_t i=0; i<NUMBER_MOTOR; ++i)
     motorCalculated[i] = motor[i];
@@ -834,6 +838,10 @@ void mixTable() {
       motor[0] = PIDMIX( 0,-4/3, 0); //FRONT
       motor[1] = PIDMIX(-1,+2/3, 0); //RIGHT
       motor[2] = PIDMIX(+1,+2/3, 0); //LEFT
+      #ifdef HK_AUTO_SERVO
+        servo[4] = constrain(conf.tri_yaw_middle + YAW_DIRECTION * axisPID[YAW], TRI_YAW_CONSTRAINT_MIN, TRI_YAW_CONSTRAINT_MAX); //REAR
+        servo[5] = constrain(conf.tri_yaw_middle + YAW_DIRECTION * axisPID[YAW], TRI_YAW_CONSTRAINT_MIN, TRI_YAW_CONSTRAINT_MAX); //REAR
+      #endif
     #else
       motor[0] = PIDMIX( 0,+4/3, 0); //REAR
       motor[1] = PIDMIX(-1,-2/3, 0); //RIGHT
