@@ -253,7 +253,6 @@ static struct {
   #endif
 } conf;
 
-
 // **********************
 // GPS common variables
 // **********************
@@ -920,9 +919,9 @@ void loop () {
     #endif
   } else { // not in rc loop
     static uint8_t taskOrder=0; // never call all functions in the same loop, to avoid high delay spikes
-    switch (taskOrder++ % 5) {
+    switch (taskOrder++ % 6) {
       case 0:
-        #if MAG
+        #if (MAG || HK_MAG) 
           Mag_getADC();
         #endif
         break;
@@ -949,6 +948,13 @@ void loop () {
           auto_switch_landing_lights();
         #endif
         break;
+
+      case 5:
+        #ifdef HK_MAX_SONAR
+        HK_Sonar_Update();
+        #endif
+        break;
+
     }
   }
  

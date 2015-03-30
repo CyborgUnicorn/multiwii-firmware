@@ -55,6 +55,9 @@ static uint8_t inBuf[INBUF_SIZE];
 #define MSP_GET_CALC_MOTOR                10    //out message         motor[NUMBER_MOTOR]  Get the actual motor value calculated by the MultiWii
 #define MSP_GET_RAW_MOTOR_ENABLED         11    //out message         read if the set raw values setting is set 
 #define MSP_ATOMIC_SERVO                  12    //out message         no param
+#define MSP_GET_ALTITUDE                  13    //out message         no param
+#define MSP_GET_COMPASS                   14    //out message         no param
+
 
 #define MSP_ARM                           50    //in message          no param
 #define MSP_DISARM                        51    //in message          no param
@@ -442,6 +445,20 @@ void evaluateCommand() {
     #ifdef HK_FORCE_RAW_MOTOR_VALUES
       useMotorRaw = read8();
       headSerialReply(0);
+    #endif
+    break;
+
+    case MSP_GET_ALTITUDE:
+    #ifdef HK_MAX_SONAR
+      headSerialReply(2);
+      serialize16( sonarAltitudeAverage );
+    #endif
+    break;
+
+    case MSP_GET_COMPASS:
+    #ifdef HMC5883
+      headSerialReply(6);
+      for(uint8_t i=0;i<3;i++) serialize16(magADC[i]);
     #endif
     break;
 

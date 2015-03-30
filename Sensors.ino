@@ -1459,7 +1459,6 @@ inline void Sonar_update() {}
 #endif
 
 
-
 void initSensors() {
   delay(200);
   POWERPIN_ON;
@@ -1468,8 +1467,11 @@ void initSensors() {
   delay(100);
   if (GYRO) Gyro_init();
   if (BARO) Baro_init();
-  if (MAG) Mag_init();
+  if (MAG || HK_MAG) Mag_init();
   if (ACC) {ACC_init();acc_25deg = acc_1G * 0.423;}
   if (SONAR) Sonar_init();
+  #ifdef HK_MAX_SONAR
+    HK_Sonar_Init();
+  #endif
   f.I2C_INIT_DONE = 1;
 }
