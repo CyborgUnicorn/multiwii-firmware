@@ -2,7 +2,7 @@
 
 #define NUMSAMPLES 10
 
-static uint16_t sonarAltitudeAverage = 0;
+//static uint16_t sonarAltitudeAverage = 0;
 
 uint8_t samples[NUMSAMPLES];
 

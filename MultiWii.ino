@@ -82,6 +82,17 @@ const char pidnames[] PROGMEM =
   "VEL;"
 ;
 
+#ifdef HK_ENGINE_FAILSAFE
+  static uint32_t lastSerialComTime = 0;
+  static uint32_t lastSerialComTriggerTime = HK_ENGINE_FAILSAFE_TIMER * 1000000;
+  static uint8_t failSafeTriggered = 0;
+  static uint8_t failSafeArmed = 0;
+#endif
+
+#ifdef HK_MAX_SONAR
+  static uint16_t sonarAltitudeAverage = 0;
+#endif
+
 static uint32_t currentTime = 0;
 static uint16_t previousTime = 0;
 static uint16_t cycleTime = 0;     // this is the number in micro second to achieve a full loop, it can differ a little and is taken into account in the PID loop
@@ -648,6 +659,22 @@ void loop () {
       }
       failsafeCnt++;
     #endif
+
+    #ifdef HK_ENGINE_FAILSAFE
+      if (failSafeTriggered == 1) {
+        if ( rcData[THROTTLE] > HK_FAILSAFE_ZERO_THROTTLE ) {
+          rcData[THROTTLE] = HK_FAILSAFE_ZERO_THROTTLE;
+        }
+        /*
+        else if (rcData[THROTTLE] > MINTHROTTLE) {
+          rcData[THROTTLE] = max(rcData[THROTTLE] - 2, MINTHROTTLE);
+        }*/
+        if ( sonarAltitudeAverage < 20 ) {
+          rcData[THROTTLE] = MINTHROTTLE;
+        } 
+      }
+    #endif
+
     // end of failsave routine - next change is made with RcOptions setting
     if (rcData[THROTTLE] < MINCHECK) {
       errorGyroI[ROLL] = 0; errorGyroI[PITCH] = 0; errorGyroI[YAW] = 0;
@@ -963,6 +990,21 @@ void loop () {
   currentTime = micros();
   cycleTime = currentTime - previousTime;
   previousTime = currentTime;
+
+#ifdef HK_ENGINE_FAILSAFE
+
+  if (failSafeArmed == 1) {
+    if ( (currentTime - lastSerialComTime) > lastSerialComTriggerTime ) {
+      failSafeTriggered = 1;
+    }
+    else {
+      failSafeTriggered = 0;
+    }
+  }
+  else if ( sonarAltitudeAverage > HK_FAILSAFE_ARM_ALTITUDE ) {
+    failSafeArmed = 1;
+  }
+#endif
 
   #if MAG
     if (abs(rcCommand[YAW]) <70 && f.MAG_MODE) {

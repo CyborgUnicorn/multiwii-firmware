@@ -51,6 +51,12 @@
     #define HMC5883
     #define HK_MAG 1
     #define HK_READ_CALCULATED_MOTOR_VALUES
+    
+    #define HK_ENGINE_FAILSAFE
+    #define HK_ENGINE_FAILSAFE_TIMER  1
+    #define HK_FAILSAFE_ARM_ALTITUDE  70  // cm
+    #define HK_FAILSAFE_ZERO_THROTTLE   1400
+
 
   /****************************    Motor minthrottle    *******************************/
     /* Set the minimum throttle command sent to the ESC (Electronic Speed Controller)

@@ -162,6 +162,10 @@ void serialCom() {
         evaluateCommand();  // we got a valid packet, evaluate it
       //}
       c_state = IDLE;
+
+      #ifdef HK_ENGINE_FAILSAFE
+          lastSerialComTime = currentTime;
+      #endif
     }
   }
 }
