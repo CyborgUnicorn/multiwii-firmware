@@ -259,7 +259,7 @@
 #endif
 
 #ifdef HUNTER_KILLER
-  #define SERVO_6_PINMODE   DDRB |= (1<<7); // A11
+  #define SERVO_6_PINMODE   DDRB |= (1<<7); // 11
   #define SERVO_6_PIN_HIGH  PORTB |= 1<<7;
   #define SERVO_6_PIN_LOW   PORTB &= ~(1<<7);
 #else

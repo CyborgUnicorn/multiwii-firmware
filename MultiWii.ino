@@ -228,6 +228,7 @@ static int16_t motor[NUMBER_MOTOR];
 #if defined(HUNTER_KILLER)
   static int16_t hk_servo[8] = {1500,1500,1500,1500,1500,1500,1500,1500};
   static int8_t hk_atomic_servo[8] = {125,125,125,125,125,125,125,125};
+  static int8_t hk_servo_offset[8] = {127,127,127,127,127,127,127,127};
 #endif
 
 // ************************
@@ -664,6 +665,9 @@ void loop () {
       if (failSafeTriggered == 1) {
         if ( rcData[THROTTLE] > HK_FAILSAFE_ZERO_THROTTLE ) {
           rcData[THROTTLE] = HK_FAILSAFE_ZERO_THROTTLE;
+          for ( int8_t i = 0; i < 8; ++i ) {
+            hk_servo[i] = 1500;
+          }
         }
         /*
         else if (rcData[THROTTLE] > MINTHROTTLE) {

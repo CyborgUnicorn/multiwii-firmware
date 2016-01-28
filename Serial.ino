@@ -57,12 +57,14 @@ static uint8_t inBuf[INBUF_SIZE];
 #define MSP_ATOMIC_SERVO                  12    //out message         no param
 #define MSP_GET_ALTITUDE                  13    //out message         no param
 #define MSP_GET_COMPASS                   14    //out message         no param
+#define MSP_GET_SERVO_OFFSET              15    //out message         no param
 
 
 #define MSP_ARM                           50    //in message          no param
 #define MSP_DISARM                        51    //in message          no param
 #define MSP_SET_RAW_MOTOR                 52    //in message          motor[NUMBER_MOTOR]  HK = (0:front,1:right,2:left)
 #define MSP_SET_RAW_MOTOR_ENABLED         53    //in message          enable and disable the raw motor value override 0:disable, anything else enable
+#define MSP_SET_SERVO_OFFSET              54    //in message          set the offsets of the servo
 
 
 #define MSP_EEPROM_WRITE         250   //in message          no param
@@ -187,6 +189,16 @@ void evaluateCommand() {
      #endif
      headSerialReply(0);
      break;
+
+
+  case MSP_SET_SERVO_OFFSET:
+    #if defined(HUNTER_KILLER)
+      for(uint8_t i=0;i<8;i++) {
+        hk_servo_offset[i] = read8();
+      }
+    #endif;
+  break;
+
 #if GPS
    case MSP_SET_RAW_GPS:
      f.GPS_FIX = read8();
@@ -434,6 +446,15 @@ void evaluateCommand() {
       headSerialReply(16);
       for(uint8_t i=0;i<8;i++) {
         serialize16( (i < NUMBER_MOTOR) ? motorCalculated[i] : 0 );
+      }
+    #endif
+    break;
+
+    case MSP_GET_SERVO_OFFSET:
+    #ifdef HUNTER_KILLER
+      headSerialReply(16);
+      for(uint8_t i=0;i<8;i++) {
+        serialize8(hk_servo_offset[i]);
       }
     #endif
     break;

@@ -53,9 +53,9 @@
     #define HK_READ_CALCULATED_MOTOR_VALUES
     
     #define HK_ENGINE_FAILSAFE
-    #define HK_ENGINE_FAILSAFE_TIMER  1
+    #define HK_ENGINE_FAILSAFE_TIMER  0.3
     #define HK_FAILSAFE_ARM_ALTITUDE  70  // cm
-    #define HK_FAILSAFE_ZERO_THROTTLE   1400
+    #define HK_FAILSAFE_ZERO_THROTTLE   1650
 
 
   /****************************    Motor minthrottle    *******************************/
