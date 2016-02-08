@@ -452,7 +452,7 @@ void evaluateCommand() {
 
     case MSP_GET_SERVO_OFFSET:
     #ifdef HUNTER_KILLER
-      headSerialReply(16);
+      headSerialReply(8);
       for(uint8_t i=0;i<8;i++) {
         serialize8(hk_servo_offset[i]);
       }

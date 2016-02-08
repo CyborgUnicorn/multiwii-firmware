@@ -86,12 +86,12 @@ void writeServos() {
         #if defined(PROMINI) || (defined(PROMICRO) && defined(HWPWM6)) || (defined(MEGA) && defined(MEGA_HW_GIMBAL))
           #if defined(HUNTER_KILLER)
             #ifdef HK_AUTO_SERVO
-              int16_t actualServo = ((servo[i]-1000) >> 2) + (int16_t)hk_servo_offset[i] - 125;
+              int16_t actualServo = ((servo[i]-1000) >> 2) + (int8_t)(hk_servo_offset[i] - 127);
               
-              if (actualServo < 0) {
-                atomicServo[i] = 0;
-              } else if (actualServo > 250) {
-                atomicServo[i] = 250;
+              if (actualServo < 25) {
+                atomicServo[i] = 25;
+              } else if (actualServo > 225) {
+                atomicServo[i] = 225;
               } else {
                 atomicServo[i] = (uint8_t)actualServo;
               }

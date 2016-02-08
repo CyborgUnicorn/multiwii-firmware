@@ -227,8 +227,8 @@ static int16_t motor[NUMBER_MOTOR];
 #endif
 #if defined(HUNTER_KILLER)
   static int16_t hk_servo[8] = {1500,1500,1500,1500,1500,1500,1500,1500};
-  static int8_t hk_atomic_servo[8] = {125,125,125,125,125,125,125,125};
-  static int8_t hk_servo_offset[8] = {127,127,127,127,127,127,127,127};
+  static uint8_t hk_atomic_servo[8] = {125,125,125,125,125,125,125,125};
+  static uint8_t hk_servo_offset[8] = {127,127,127,127,127,127,127,127};
 #endif
 
 // ************************
