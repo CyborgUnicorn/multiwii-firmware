@@ -196,7 +196,7 @@ void evaluateCommand() {
       for(uint8_t i=0;i<8;i++) {
         hk_servo_offset[i] = read8();
       }
-    #endif;
+    #endif
   break;
 
 #if GPS
@@ -428,7 +428,7 @@ void evaluateCommand() {
         serialize8(hk_atomic_servo[i]);
        #else
         serialize8(0);
-       #endif;
+       #endif
       }
     break;
 
