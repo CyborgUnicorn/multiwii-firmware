@@ -673,9 +673,11 @@ void loop () {
         else if (rcData[THROTTLE] > MINTHROTTLE) {
           rcData[THROTTLE] = max(rcData[THROTTLE] - 2, MINTHROTTLE);
         }*/
+    #ifdef HK_MAX_SONAR
         if ( sonarAltitudeAverage < 20 ) {
           rcData[THROTTLE] = MINTHROTTLE;
         } 
+    #endif
       }
     #endif
 
@@ -1005,9 +1007,11 @@ void loop () {
       failSafeTriggered = 0;
     }
   }
+  #ifdef HK_MAX_SONAR
   else if ( sonarAltitudeAverage > HK_FAILSAFE_ARM_ALTITUDE ) {
     failSafeArmed = 1;
   }
+  #endif
 #endif
 
   #if MAG

@@ -46,10 +46,12 @@
 
     #define HUNTER_KILLER
     #define HK_AUTO_SERVO
-    #define HK_MAX_SONAR
     //#define HK_FORCE_RAW_MOTOR_VALUES
-    #define HMC5883
-    #define HK_MAG 1
+    
+    //#define HK_MAX_SONAR
+    //#define HMC5883
+    #define HK_MAG 0
+
     #define HK_READ_CALCULATED_MOTOR_VALUES
     
     #define HK_ENGINE_FAILSAFE
@@ -190,7 +192,7 @@
 /*************************************************************************************************/
 
   /********************************    TRI    *********************************/
-    #define YAW_DIRECTION 1
+    #define YAW_DIRECTION -1
     //#define YAW_DIRECTION -1 // if you want to reverse the yaw correction direction
     /* you can change the tricopter servo travel here */
 //      #define TRI_YAW_CONSTRAINT_MIN 1020
